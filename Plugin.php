@@ -5,6 +5,7 @@ namespace Grafxflow\Eucookielaw;
 use Block;
 use Grafxflow\Eucookielaw\Models\Settings;
 use Illuminate\Support\Facades\Event;
+use URL;
 use System\Classes\PluginBase;
 use System\Classes\SettingsManager;
 

@@ -93,7 +93,6 @@ class Plugin extends PluginBase
         $revokable = empty($settings::get('revokable')) ? "false" : "true";
         $revokeBtnTemplate = json_encode($settings::get('revokeBtn'));
 
-        /*
         // 1. Gather text/string values safely
         $configData = [
             'header' => $settings::get('header'),
@@ -134,8 +133,8 @@ class Plugin extends PluginBase
 
         // 4. Append to the placeholder
         Block::append('scripts', $inlineConfig . $scriptFile);
-        */
 
+        /*
         $initJS = <<<JS
         window.cookieconsent.initialise({
         content: {
@@ -213,5 +212,6 @@ class Plugin extends PluginBase
         JS;
 
         Block::append('scripts', '<script>' . $initJS . '</script>');
+        */
     }
 }

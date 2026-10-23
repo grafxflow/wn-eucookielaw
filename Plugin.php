@@ -27,7 +27,7 @@ class Plugin extends PluginBase
             ]);
             */
 
-            $this->initJs();
+            // $this->initJs();
 
             $cookieName = Settings::get('cookie_name');
             $controller->vars["cookieconsent_status"] = empty($_COOKIE[ $cookieName ]) ? "" : $_COOKIE[ $cookieName ];
@@ -40,6 +40,8 @@ class Plugin extends PluginBase
         $this->addJs('/plugins/grafxflow/eucookielaw/assets/css/cookieconsent.min.css', [
             'type' => 'module',
         ]);
+
+        $this->initJs();
     }
 
     public function registerMarkupTags()

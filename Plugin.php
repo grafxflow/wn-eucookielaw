@@ -100,26 +100,26 @@ class Plugin extends PluginBase
 
         // 1. Gather text/string values safely
         $configData = [
-            'header'             => $settings::get('header'),
-            'message'            => $settings::get('message'),
-            'dismiss'            => $settings::get('dismiss'),
-            'allow'              => $settings::get('allow'),
-            'deny'               => $settings::get('deny'),
-            'link'               => $settings::get('link'),
-            'href'               => $settings::get('href'),
-            'position'           => $settings::get('position'),
-            'container'          => $settings::get('container'),
-            'type'               => $settings::get('type'),
-            'theme'              => $settings::get('theme'),
-            'revokable'          => (bool)$revokable,
-            'revokeBtn'          => $revokeBtnTemplate,
-            'static'             => (bool)$static,
-            'dismissOnScroll'    => $dismissOnScroll,
-            'dismissOnTimeout'   => $dismissOnTimeout,
-            'cookie_path'        => $settings::get('cookie_path'),
-            'cookie_name'        => $settings::get('cookie_name'),
-            'cookie_domain'      => $settings::get('cookie_domain'),
-            'cookie_expiryDays'  => $settings::get('cookie_expiryDays'),
+            'header' => $settings::get('header'),
+            'message' => $settings::get('message'),
+            'dismiss' => $settings::get('dismiss'),
+            'allow' => $settings::get('allow'),
+            'deny' => $settings::get('deny'),
+            'link' => $settings::get('link'),
+            'href' => $settings::get('href'),
+            'position' => $settings::get('position'),
+            'container' => $settings::get('container'),
+            'type' => $settings::get('type'),
+            'theme' => $settings::get('theme'),
+            'revokable' => (bool)$revokable,
+            'revokeBtn' => $revokeBtnTemplate,
+            'static' => (bool)$static,
+            'dismissOnScroll' => $dismissOnScroll,
+            'dismissOnTimeout' => $dismissOnTimeout,
+            'cookie_path' => $settings::get('cookie_path'),
+            'cookie_name' => $settings::get('cookie_name'),
+            'cookie_domain' => $settings::get('cookie_domain'),
+            'cookie_expiryDays' => $settings::get('cookie_expiryDays'),
         ];
 
         // 2. Safely output the configuration payload
@@ -134,7 +134,7 @@ class Plugin extends PluginBase
 
         // 3. Output the script tag pointing to your asset file
         $assetUrl = Url::asset('plugins/grafxflow/eucookielaw/assets/js/cookie-init.js');
-        $scriptFile = '<script src="' . $assetUrl . '"></script>';
+        $scriptFile = '<script src="' . $assetUrl . '" defer></script>';
 
         // 4. Append to the placeholder
         Block::append('scripts', $inlineConfig . $scriptFile);

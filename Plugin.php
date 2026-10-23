@@ -15,33 +15,25 @@ class Plugin extends PluginBase
 
     public const COOKIEVAL_ALLOW = 'allow';
 
+    private $pathToPlugin;
+
+    public function __construct(\Illuminate\Contracts\Foundation\Application $app)
+    {
+        parent::__construct($app);
+        $this->pathToPlugin = '/plugins/grafxflow/eucookielaw';
+    }
+
     public function boot(): void
     {
         /** @var \Cms\Classes\Controller $controller  */
         Event::listen('cms.page.beforeDisplay', function ($controller, $action, $params): void {
-
-            /*
-            $this->addCss('/plugins/grafxflow/eucookielaw/assets/js/cookieconsent.min.js');
-            $this->addJs('/plugins/grafxflow/eucookielaw/assets/css/cookieconsent.min.css', [
-                'type' => 'module',
-            ]);
-            */
-
-            // $this->initJs();
+            $controller->addJs($this->pathToPlugin . '/assets/js/cookieconsent.min.js');
+            $controller->addCss($this->pathToPlugin . '/assets/css/cookieconsent.min.css');
+            $this->initJs();
 
             $cookieName = Settings::get('cookie_name');
             $controller->vars["cookieconsent_status"] = empty($_COOKIE[ $cookieName ]) ? "" : $_COOKIE[ $cookieName ];
         });
-    }
-
-    public function loadAssets(): void
-    {
-        $this->addCss('/plugins/grafxflow/eucookielaw/assets/js/cookieconsent.min.js');
-        $this->addJs('/plugins/grafxflow/eucookielaw/assets/css/cookieconsent.min.css', [
-            'type' => 'module',
-        ]);
-
-        $this->initJs();
     }
 
     public function registerMarkupTags()

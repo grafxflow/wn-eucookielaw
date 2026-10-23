@@ -26,8 +26,8 @@ class Plugin extends PluginBase
     {
         /** @var \Cms\Classes\Controller $controller  */
         Event::listen('cms.page.beforeDisplay', function ($controller, $action, $params): void {
-            $controller->addJs($this->pathToPlugin . '/assets/cookieconsent.min.js');
-            $controller->addCss($this->pathToPlugin . '/assets/cookieconsent.min.css');
+            $controller->addJs($this->pathToPlugin . '/assets/js/cookieconsent.min.js');
+            $controller->addCss($this->pathToPlugin . '/assets/css/cookieconsent.min.css');
             $this->initJs();
 
             $cookieName = Settings::get('cookie_name');
@@ -80,15 +80,9 @@ class Plugin extends PluginBase
 
         switch ($complianceType) {
             case "opt-in":
-                return (bool) (self::COOKIEVAL_ALLOW === $cookieVal)
-
-
-                ;
+                return (bool) (self::COOKIEVAL_ALLOW === $cookieVal);
             case "opt-out":
-                return ! (self::COOKIEVAL_DENY === $cookieVal)
-
-
-                ;
+                return ! (self::COOKIEVAL_DENY === $cookieVal);
             default:
                 return true;
         }
@@ -102,8 +96,41 @@ class Plugin extends PluginBase
         $static = empty($settings::get('static')) ? "false" : "true";
         $revokable = empty($settings::get('revokable')) ? "false" : "true";
         $revokeBtnTemplate = json_encode($settings::get('revokeBtn'));
-        $initJS = <<<JS
 
+        $configData = [
+            'header' => $settings::get('header'),
+            'message' => $settings::get('message'),
+            'dismiss' => $settings::get('dismiss'),
+            'allow' => $settings::get('allow'),
+            'deny' => $settings::get('deny'),
+            'link' => $settings::get('link'),
+            'href' => $settings::get('href'),
+            'position' => $settings::get('position'),
+            'container' => $settings::get('container'),
+            'palette' => json_decode($settings::get('palette'), true) ?: [],
+            'elements' => json_decode($settings::get('elements'), true) ?: [],
+            'compliance' => json_decode($settings::get('compliance'), true) ?: [],
+            'type' => $settings::get('type'),
+            'revokable' => (bool)$revokable,
+            'revokeBtn' => $revokeBtnTemplate,
+            'static' => (bool)$static,
+            'dismissOnScroll' => $dismissOnScroll,
+            'dismissOnTimeout' => $dismissOnTimeout,
+            'cookie_path' => $settings::get('cookie_path'),
+            'cookie_name' => $settings::get('cookie_name'),
+            'cookie_domain' => $settings::get('cookie_domain'),
+            'cookie_expiryDays' => $settings::get('cookie_expiryDays'),
+        ];
+
+        $inlineConfig = '<script>window.CookieNoticeConfig = ' . json_encode($configData) . ';</script>';
+
+        $assetUrl = Url::asset('plugins/grafxflow/eucookielaw/assets/js/cookie-init.js');
+        $scriptFile = '<script src="' . $assetUrl . '"></script>';
+
+        Block::append('scripts', $inlineConfig . $scriptFile);
+
+        /*
+        $initJS = <<<JS
         window.cookieconsent.initialise({
             content: {
                 "header":"{$settings::get('header')}",
@@ -177,8 +204,9 @@ class Plugin extends PluginBase
                 }
             }
         }
-JS;
+        JS;
 
         Block::append('scripts', '<script>' . $initJS . '</script>');
+        */
     }
 }

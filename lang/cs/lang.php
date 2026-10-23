@@ -9,7 +9,7 @@ return [
         'label' => "EU Cookie Laws",
         'description' => 'Správa cookie lišty',
     ],
-    'eucookielawmadness' => [
-        'manage_eucookielawmadness' => 'Manage EUCookieLaw',
+    'eucookielaw' => [
+        'manage_eucookielaw' => 'Manage EUCookieLaw',
     ],
 ];

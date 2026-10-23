@@ -9,7 +9,7 @@ return [
         'label' => "EU Cookie Law",
         'description' => 'Manage cookie madness',
     ],
-    'eucookielawmadness' => [
-        'manage_eucookielawmadness' => 'Manage EUCookieLaw',
+    'eucookielaw' => [
+        'manage_eucookielaw' => 'Manage EUCookieLaw',
     ],
 ];

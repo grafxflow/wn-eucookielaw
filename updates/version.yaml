@@ -1,4 +1,6 @@
 1.0.1:
-    - Initialize plugin.
+    - 'Initialize plugin.'
 1.0.2:
-    - CS locale added
+    - 'CS locale added'
+1.0.3:
+    - 'Migrated to Winter CMS'

@@ -1,22 +1,22 @@
-# EU law cookie madness
-EU laws require sites to let the user know if cookies are stored on their
-devices. Depending on EU country there are different types of compliance implementation. Usually scripts like this one only offer notifications and they dont implement real opt-in or opt-out compliance.
+# EU Law Cookie
 
-This script offers OctoberCMS implementation of [Cookie Consent JS](https://github.com/insites/cookieconsent/), additional Twig template function for easier checks whether or not to serve cookies and additional JS that cleans all cookies if user declines to accept cookies.
+EU law requires sites to let the user know if cookies are stored on their devices. Depending on the EU country there are different types of compliance implementation. Usually scripts like this one only offer notifications and they don't implement real opt-in or opt-out compliance.
+
+This script offers **Winter CMS** implementation of [Cookie Consent JS](https://github.com/insites/cookieconsent/), additional Twig template function for easier checks whether or not to serve cookies and additional JS that cleans all cookies if user declines to accept cookies.
 
 # Configuration
-This plugin integrates the popular Cookie Consent tool in your theme. It requires
-the theme to have the `scripts` and `styles` placeholder.
+This plugin integrates the popular Cookie Consent tool in your theme. It requires the theme to have the `scripts` and `styles` placeholder.
 
-Simply configure the settings from the backend interface and then it automatically
-runs on the frontend. Please see how to prevent cookies section as well. Remember that you are soly responsible for any law and regulation compliance.
+Simply configure the settings from the backend interface and then it automatically runs on the frontend. Please see how to prevent cookies section as well. Remember that you are solely responsible for any law and regulation compliance.
 
 ## Compliance types
-* info (allways serve cookies)
-* opt-in (dont serve cookies unless explicit permission)
+
+* info (always serve cookies)
+* opt-in (don't serve cookies unless explicit permission)
 * opt-out (serve cookies unless visitor declines serving)
 
 ## Prevent cookies
+
 This is only Javascript frontend (as all other plugins)! It sets cookies based on user decision whether to allow or reject cookies.
 You will need to code your PHP to check upon users decision before setting any cookies.
 

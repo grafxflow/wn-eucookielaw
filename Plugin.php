@@ -27,7 +27,7 @@ class Plugin extends PluginBase
     {
         /** @var \Cms\Classes\Controller $controller  */
         Event::listen('cms.page.beforeDisplay', function ($controller, $action, $params): void {
-            $controller->addJs($this->pathToPlugin . '/assets/js/cookieconsent.min.js');
+            // $controller->addJs($this->pathToPlugin . '/assets/js/cookieconsent.min.js');
             $controller->addCss($this->pathToPlugin . '/assets/css/cookieconsent.min.css');
             $this->initJs();
 

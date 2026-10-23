@@ -1,8 +1,8 @@
 <?php
 
-namespace Grafxflow\WnEucookielaw\models;
+namespace Grafxflow\Wneucookielaw\models;
 
-use October\Rain\Database\Model;
+use Winter\Storm\Database\Model;
 
 class Settings extends Model
 {
@@ -13,5 +13,4 @@ class Settings extends Model
     public $settingsFields = 'fields.yaml';
 
     protected $cache = [];
-
 }

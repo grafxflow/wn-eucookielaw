@@ -1,8 +1,8 @@
 <?php
 
-namespace Grafxflow\WnEucookielaw;
+namespace Grafxflow\Wneucookielaw;
 
-use Grafxflow\WnEucookielaw\Models\Settings;
+use Grafxflow\Wneucookielaw\Models\Settings;
 use Illuminate\Support\Facades\Cookie;
 use Illuminate\Support\Facades\Event;
 use System\Classes\PluginBase;
@@ -49,11 +49,11 @@ class Plugin extends PluginBase
     {
         return [
             'settings' => [
-                'label'       => 'grafxflow.wneucookielaw::lang.settings.label',
+                'label' => 'grafxflow.wneucookielaw::lang.settings.label',
                 'description' => 'grafxflow.wneucookielaw::lang.settings.description',
-                'icon'        => 'icon-pencil-square-o',
-                'class'       => 'grafxflow\wneucookielaw\models\Settings',
-                'category'    => SettingsManager::CATEGORY_MISC,
+                'icon' => 'icon-pencil-square-o',
+                'class' => 'grafxflow\wneucookielaw\models\Settings',
+                'category' => SettingsManager::CATEGORY_MISC,
                 'permissions' => ['grafxflow.wneucookielaw.access_settings'],
             ]
         ];
@@ -63,7 +63,7 @@ class Plugin extends PluginBase
     {
         return [
             'grafxflow.wneucookielaw.access_settings' => [
-                'tab'   => 'grafxflow.wneucookielaw::lang.plugin.name',
+                'tab' => 'grafxflow.wneucookielaw::lang.plugin.name',
                 'label' => 'grafxflow.wneucookielaw::lang.wneucookielaw.manage_eucookielawmadness'
             ],
         ];
@@ -178,7 +178,7 @@ JS;
                     return false;
                 }
                 return true;
-            default: //info
+            default:
                 return true;
         }
     }

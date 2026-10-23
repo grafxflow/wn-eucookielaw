@@ -94,8 +94,8 @@ class Plugin extends PluginBase
         $settings = new Settings();
         $dismissOnScroll = empty($settings::get('dismissOnScroll')) ? false : $settings::get('dismissOnScroll');
         $dismissOnTimeout = empty($settings::get('dismissOnTimeout')) ? false : $settings::get('dismissOnTimeout');
-        $static = empty($settings::get('static')) ? 'false' : 'true';
-        $revokable = empty($settings::get('revokable')) ? 'false' : 'true';
+        $static = empty($settings::get('static')) ? "false" : "true";
+        $revokable = empty($settings::get('revokable')) ? "false" : "true";
         $revokeBtnTemplate = json_encode($settings::get('revokeBtn'));
 
         // 1. Gather text/string values safely
@@ -111,9 +111,9 @@ class Plugin extends PluginBase
             'container' => $settings::get('container'),
             'type' => $settings::get('type'),
             'theme' => $settings::get('theme'),
-            'revokable' => (bool)$revokable,
+            'revokable' => $revokable,
             'revokeBtn' => $revokeBtnTemplate,
-            'static' => (bool)$static,
+            'static' => $static,
             'dismissOnScroll' => $dismissOnScroll,
             'dismissOnTimeout' => $dismissOnTimeout,
             'cookie_path' => $settings::get('cookie_path'),

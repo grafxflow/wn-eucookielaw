@@ -1,6 +1,6 @@
 plugin:
-    name: 'code200.eucookielawmadness::lang.plugin.name'
-    description: 'code200.eucookielawmadness::lang.plugin.description'
-    author: 'Miha Trtnik'
+    name: 'grafxflow.wneucookielaw::lang.plugin.name'
+    description: 'grafxflow.wneucookielaw::lang.plugin.description'
+    author: 'Grafxflow'
     icon: oc-icon-adjust
     homepage: ''

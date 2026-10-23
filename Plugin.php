@@ -1,6 +1,8 @@
-<?php namespace Code200\Eucookielawmadness;
+<?php
 
-use Code200\Eucookielawmadness\models\Settings;
+namespace Grafxflow\WnEucookielaw;
+
+use Grafxflow\WnEucookielaw\Models\Settings;
 use Illuminate\Support\Facades\Cookie;
 use Illuminate\Support\Facades\Event;
 use System\Classes\PluginBase;
@@ -18,7 +20,7 @@ class Plugin extends PluginBase
     public function __construct(\Illuminate\Contracts\Foundation\Application $app)
     {
         parent::__construct($app);
-        $this->pathToPlugin = '/plugins/code200/eucookielawmadness';
+        $this->pathToPlugin = '/plugins/grafxflow/wneucookielaw';
     }
 
     public function boot()
@@ -47,12 +49,12 @@ class Plugin extends PluginBase
     {
         return [
             'settings' => [
-                'label'       => 'code200.eucookielawmadness::lang.settings.label',
-                'description' => 'code200.eucookielawmadness::lang.settings.description',
+                'label'       => 'grafxflow.wneucookielaw::lang.settings.label',
+                'description' => 'grafxflow.wneucookielaw::lang.settings.description',
                 'icon'        => 'icon-pencil-square-o',
-                'class'       => 'Code200\eucookielawmadness\models\Settings',
+                'class'       => 'grafxflow\wneucookielaw\models\Settings',
                 'category'    => SettingsManager::CATEGORY_MISC,
-                'permissions' => ['code200.eucookielawmadness.access_settings'],
+                'permissions' => ['grafxflow.wneucookielaw.access_settings'],
             ]
         ];
     }
@@ -60,9 +62,9 @@ class Plugin extends PluginBase
     public function registerPermissions()
     {
         return [
-            'code200.eucookielawmadness.access_settings' => [
-                'tab'   => 'code200.eucookielawmadness::lang.plugin.name',
-                'label' => 'code200.eucookielawmadness::lang.eucookielawmadness.manage_eucookielawmadness'
+            'grafxflow.wneucookielaw.access_settings' => [
+                'tab'   => 'grafxflow.wneucookielaw::lang.plugin.name',
+                'label' => 'grafxflow.wneucookielaw::lang.wneucookielaw.manage_eucookielawmadness'
             ],
         ];
     }

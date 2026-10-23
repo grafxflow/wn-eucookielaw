@@ -1,13 +1,13 @@
 <?php return [
     'plugin' => [
-        'name' => 'EUCookieLawMadness',
+        'name' => 'EUCookieLaw',
         'description' => 'Display an EU cookie law popup.'
     ],
     'settings' => [
-        'label' => "EU Cookie Law Madness",
+        'label' => "EU Cookie Law",
         'description' => 'Manage cookie madness'
     ],
-    'eucookielawmadness' => [
-        'manage_eucookielawmadness' => 'Manage EUCookieLawMadness'
+    'eucookielaw' => [
+        'manage_eucookielawmadness' => 'Manage EUCookieLaw'
     ]
 ];

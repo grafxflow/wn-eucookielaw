@@ -19,16 +19,27 @@ class Plugin extends PluginBase
     {
         /** @var \Cms\Classes\Controller $controller  */
         Event::listen('cms.page.beforeDisplay', function ($controller, $action, $params): void {
+
+            /*
             $this->addCss('/plugins/grafxflow/eucookielaw/assets/js/cookieconsent.min.js');
             $this->addJs('/plugins/grafxflow/eucookielaw/assets/css/cookieconsent.min.css', [
                 'type' => 'module',
             ]);
+            */
 
             $this->initJs();
 
             $cookieName = Settings::get('cookie_name');
             $controller->vars["cookieconsent_status"] = empty($_COOKIE[ $cookieName ]) ? "" : $_COOKIE[ $cookieName ];
         });
+    }
+
+    public function loadAssets(): void
+    {
+        $this->addCss('/plugins/grafxflow/eucookielaw/assets/js/cookieconsent.min.js');
+        $this->addJs('/plugins/grafxflow/eucookielaw/assets/css/cookieconsent.min.css', [
+            'type' => 'module',
+        ]);
     }
 
     public function registerMarkupTags()

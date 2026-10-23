@@ -62,8 +62,8 @@ class Plugin extends PluginBase
     {
         return [
             'grafxflow.eucookielaw.access_settings' => [
-                'tab' => 'grafxflow.wneucookielaw::lang.plugin.name',
-                'label' => 'grafxflow.wneucookielaw::lang.wneucookielaw.manage_eucookielawmadness',
+                'tab' => 'grafxflow.eucookielaw::lang.plugin.name',
+                'label' => 'grafxflow.eucookielaw::lang.wneucookielaw.manage_eucookielawmadness',
             ],
         ];
     }

@@ -1,0 +1,8 @@
+{
+    "name": "grafxflow/wn-eucookielaw",
+    "type": "winter-plugin",
+    "description": "EU Cookie plugin for Winter CMS",
+    "homepage": "https://github.com/grafxflow/wn-eucookielaw",
+    "keywords": ["cms", "wintercms", "cookie", "eu"],
+    "license": "MIT"
+}

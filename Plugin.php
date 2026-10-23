@@ -11,24 +11,32 @@ use System\Classes\SettingsManager;
 
 class Plugin extends PluginBase
 {
-    public const COOKIEVAL_DENY  = 'deny';
+    public const COOKIEVAL_DENY = 'deny';
 
     public const COOKIEVAL_ALLOW = 'allow';
 
-    private $pathToPlugin;
+    // private $pathToPlugin;
 
+    /*
     public function __construct(\Illuminate\Contracts\Foundation\Application $app)
     {
         parent::__construct($app);
-        $this->pathToPlugin = '/plugins/grafxflow/eucookielaw';
+        // $this->pathToPlugin = '/plugins/grafxflow/eucookielaw';
     }
+    */
 
     public function boot(): void
     {
         /** @var \Cms\Classes\Controller $controller  */
         Event::listen('cms.page.beforeDisplay', function ($controller, $action, $params): void {
-            $controller->addJs($this->pathToPlugin . '/assets/js/cookieconsent.min.js');
-            $controller->addCss($this->pathToPlugin . '/assets/css/cookieconsent.min.css');
+            // $controller->addJs($this->pathToPlugin . '/assets/js/cookieconsent.min.js');
+            // $controller->addCss($this->pathToPlugin . '/assets/css/cookieconsent.min.css');
+
+            $this->addCss('/plugins/grafxflow/eucookielaw/assets/js/cookieconsent.min.js');
+            $this->addJs('/plugins/grafxflow/eucookielaw/assets/css/cookieconsent.min.css', [
+                'type' => 'module',
+            ]);
+
             $this->initJs();
 
             $cookieName = Settings::get('cookie_name');

@@ -70,9 +70,9 @@ class Plugin extends PluginBase
     }
 
     /**
-     * Function that checks if setting cookies is even allowed
-     * @return bool
-     */
+    * Function that checks if setting cookies is even allowed
+    * @return bool
+    */
     public function allowServingCookies()
     {
         $complianceType = Settings::get('type');
@@ -81,11 +81,11 @@ class Plugin extends PluginBase
 
         switch ($complianceType) {
             case "opt-in":
-                return (bool) (self::COOKIEVAL_ALLOW === $cookieVal);
+            return (bool) (self::COOKIEVAL_ALLOW === $cookieVal);
             case "opt-out":
-                return ! (self::COOKIEVAL_DENY === $cookieVal);
+            return ! (self::COOKIEVAL_DENY === $cookieVal);
             default:
-                return true;
+            return true;
         }
     }
 
@@ -98,112 +98,121 @@ class Plugin extends PluginBase
         $revokable = empty($settings::get('revokable')) ? 'false' : 'true';
         $revokeBtnTemplate = json_encode($settings::get('revokeBtn'));
 
+        // 1. Gather text/string values safely
         $configData = [
-            'header' => $settings::get('header'),
-            'message' => $settings::get('message'),
-            'dismiss' => $settings::get('dismiss'),
-            'allow' => $settings::get('allow'),
-            'deny' => $settings::get('deny'),
-            'link' => $settings::get('link'),
-            'href' => $settings::get('href'),
-            'position' => $settings::get('position'),
-            'container' => $settings::get('container'),
-            'palette' => json_decode($settings::get('palette'), true) ?: [],
-            'elements' => json_decode($settings::get('elements'), true) ?: [],
-            'compliance' => json_decode($settings::get('compliance'), true) ?: [],
-            'type' => $settings::get('type'),
-            'revokable' => (bool)$revokable,
-            'revokeBtn' => $revokeBtnTemplate,
-            'static' => (bool)$static,
-            'dismissOnScroll' => $dismissOnScroll,
-            'dismissOnTimeout' => $dismissOnTimeout,
-            'cookie_path' => $settings::get('cookie_path'),
-            'cookie_name' => $settings::get('cookie_name'),
-            'cookie_domain' => $settings::get('cookie_domain'),
-            'cookie_expiryDays' => $settings::get('cookie_expiryDays'),
+            'header'             => $settings::get('header'),
+            'message'            => $settings::get('message'),
+            'dismiss'            => $settings::get('dismiss'),
+            'allow'              => $settings::get('allow'),
+            'deny'               => $settings::get('deny'),
+            'link'               => $settings::get('link'),
+            'href'               => $settings::get('href'),
+            'position'           => $settings::get('position'),
+            'container'          => $settings::get('container'),
+            'type'               => $settings::get('type'),
+            'theme'              => $settings::get('theme'),
+            'revokable'          => (bool)$revokable,
+            'revokeBtn'          => $revokeBtnTemplate,
+            'static'             => (bool)$static,
+            'dismissOnScroll'    => $dismissOnScroll,
+            'dismissOnTimeout'   => $dismissOnTimeout,
+            'cookie_path'        => $settings::get('cookie_path'),
+            'cookie_name'        => $settings::get('cookie_name'),
+            'cookie_domain'      => $settings::get('cookie_domain'),
+            'cookie_expiryDays'  => $settings::get('cookie_expiryDays'),
         ];
 
-        $inlineConfig = '<script>window.CookieNoticeConfig = ' . json_encode($configData) . ';</script>';
+        // 2. Safely output the configuration payload
+        // We inject the raw database objects directly to avoid breaking 'e.replace' string checks
+        $inlineConfig = '
+        <script>
+        window.CookieNoticeConfig = ' . json_encode($configData) . ';
+        window.CookieNoticeConfig.palette = {' . $settings::get('palette') . '};
+        window.CookieNoticeConfig.elements = {' . $settings::get('elements') . '};
+        window.CookieNoticeConfig.compliance = {' . $settings::get('compliance') . '};
+        </script>';
 
+        // 3. Output the script tag pointing to your asset file
         $assetUrl = Url::asset('plugins/grafxflow/eucookielaw/assets/js/cookie-init.js');
         $scriptFile = '<script src="' . $assetUrl . '"></script>';
 
+        // 4. Append to the placeholder
         Block::append('scripts', $inlineConfig . $scriptFile);
 
         /*
         $initJS = <<<JS
         window.cookieconsent.initialise({
-            content: {
-                "header":"{$settings::get('header')}",
-                "message":"{$settings::get('message')}",
-                "dismiss":"{$settings::get('dismiss')}",
-                "allow":"{$settings::get('allow')}",
-                "deny":"{$settings::get('deny')}",
-                "link":"{$settings::get('link')}",
-                "href":"{$settings::get('href')}"
-            },
-            "position":"{$settings::get('position')}",
-            "container":"{$settings::get('container')}",
-            "palette": {
-                {$settings::get('palette')}
-            },
-            "theme":"{$settings::get('theme')}",
-            "elements":{
-                {$settings::get('elements')}
-            },
-            "compliance": {
-                {$settings::get('compliance')}
-            },
-            "type":"{$settings::get('type')}",
-            "revokable":{$revokable},
-            "revokeBtn":{$revokeBtnTemplate},
-            "static":{$static},
-            "dismissOnScroll":"{$dismissOnScroll}",
-            "dismissOnTimeout":"{$dismissOnTimeout}",
+        content: {
+        "header":"{$settings::get('header')}",
+        "message":"{$settings::get('message')}",
+        "dismiss":"{$settings::get('dismiss')}",
+        "allow":"{$settings::get('allow')}",
+        "deny":"{$settings::get('deny')}",
+        "link":"{$settings::get('link')}",
+        "href":"{$settings::get('href')}"
+        },
+        "position":"{$settings::get('position')}",
+        "container":"{$settings::get('container')}",
+        "palette": {
+        {$settings::get('palette')}
+        },
+        "theme":"{$settings::get('theme')}",
+        "elements":{
+        {$settings::get('elements')}
+        },
+        "compliance": {
+        {$settings::get('compliance')}
+        },
+        "type":"{$settings::get('type')}",
+        "revokable":{$revokable},
+        "revokeBtn":{$revokeBtnTemplate},
+        "static":{$static},
+        "dismissOnScroll":"{$dismissOnScroll}",
+        "dismissOnTimeout":"{$dismissOnTimeout}",
 
-            "cookie.path": "{$settings::get('cookie_path')}",
-            "cookie.name": "{$settings::get('cookie_name')}",
-            "cookie.domain": "{$settings::get('cookie_domain')}",
-            "cookie.expiryDays": "{$settings::get('cookie_expiryDays')}",
+        "cookie.path": "{$settings::get('cookie_path')}",
+        "cookie.name": "{$settings::get('cookie_name')}",
+        "cookie.domain": "{$settings::get('cookie_domain')}",
+        "cookie.expiryDays": "{$settings::get('cookie_expiryDays')}",
 
-            onStatusChange: function(status, chosenBefore) {
-                if(status == 'deny'){
-                    clearAllCookiesExceptCookieNotice();
-                }
+        onStatusChange: function(status, chosenBefore) {
+        if(status == 'deny'){
+        clearAllCookiesExceptCookieNotice();
+        }
 
-                window.location.reload();
-            }
+        window.location.reload();
+        }
         });
 
         function getCookieDomain() {
-            var cookieDomain = "{$settings::get("cookie_domain")}";
-            if(cookieDomain.trim() == ""){
-                cookieDomain = window.location.hostname;
-            }
-            return cookieDomain;
+        var cookieDomain = "{$settings::get("cookie_domain")}";
+        if(cookieDomain.trim() == ""){
+        cookieDomain = window.location.hostname;
+        }
+        return cookieDomain;
         }
 
         function getCookiePath() {
-            var cookiePath =  "{$settings::get('cookie_path')}";
-            if(cookiePath.trim() == "") {
-                cookiePath = "/";
-            }
-            return cookiePath;
+        var cookiePath =  "{$settings::get('cookie_path')}";
+        if(cookiePath.trim() == "") {
+        cookiePath = "/";
+        }
+        return cookiePath;
         }
 
         function clearAllCookiesExceptCookieNotice() {
-            var cookies = document.cookie.split(";");
-            var cookieDomain = getCookieDomain();
-            var cookiePath = getCookiePath();
+        var cookies = document.cookie.split(";");
+        var cookieDomain = getCookieDomain();
+        var cookiePath = getCookiePath();
 
-            for (var i = 0; i < cookies.length; i++) {
-                var spcook =  cookies[i].split("=");
-                var cookieName = spcook[0].trim();
-                if(cookieName != '{$settings::get('cookie_name')}') {
-                     document.cookie = cookieName + "=; expires=Thu, 01 Jan 1970 00:00:01 GMT; domain="+cookieDomain+"; path="+cookiePath;
-                     document.cookie = cookieName + "=; expires=Thu, 01 Jan 1970 00:00:01 GMT; domain=."+cookieDomain+"; path="+cookiePath;
-                }
-            }
+        for (var i = 0; i < cookies.length; i++) {
+        var spcook =  cookies[i].split("=");
+        var cookieName = spcook[0].trim();
+        if(cookieName != '{$settings::get('cookie_name')}') {
+        document.cookie = cookieName + "=; expires=Thu, 01 Jan 1970 00:00:01 GMT; domain="+cookieDomain+"; path="+cookiePath;
+        document.cookie = cookieName + "=; expires=Thu, 01 Jan 1970 00:00:01 GMT; domain=."+cookieDomain+"; path="+cookiePath;
+        }
+        }
         }
         JS;
 

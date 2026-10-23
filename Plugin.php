@@ -5,9 +5,9 @@ namespace Grafxflow\Eucookielaw;
 use Block;
 use Grafxflow\Eucookielaw\Models\Settings;
 use Illuminate\Support\Facades\Event;
-use URL;
 use System\Classes\PluginBase;
 use System\Classes\SettingsManager;
+use URL;
 
 class Plugin extends PluginBase
 {
@@ -70,9 +70,9 @@ class Plugin extends PluginBase
     }
 
     /**
-    * Function that checks if setting cookies is even allowed
-    * @return bool
-    */
+     * Function that checks if setting cookies is even allowed
+     * @return bool
+     */
     public function allowServingCookies()
     {
         $complianceType = Settings::get('type');
@@ -81,11 +81,11 @@ class Plugin extends PluginBase
 
         switch ($complianceType) {
             case "opt-in":
-            return (bool) (self::COOKIEVAL_ALLOW === $cookieVal);
+                return (bool) (self::COOKIEVAL_ALLOW === $cookieVal);
             case "opt-out":
-            return ! (self::COOKIEVAL_DENY === $cookieVal);
+                return ! (self::COOKIEVAL_DENY === $cookieVal);
             default:
-            return true;
+                return true;
         }
     }
 

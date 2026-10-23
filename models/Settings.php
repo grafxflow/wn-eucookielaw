@@ -1,6 +1,6 @@
 <?php
 
-namespace Grafxflow\Wneucookielaw\models;
+namespace Grafxflow\Eucookielaw\models;
 
 use Winter\Storm\Database\Model;
 

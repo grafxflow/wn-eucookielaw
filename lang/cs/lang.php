@@ -10,6 +10,6 @@ return [
         'description' => 'Správa cookie lišty',
     ],
     'eucookielawmadness' => [
-        'manage_eucookielawmadness' => 'Manage EUCookieLaw'
-    ]
+        'manage_eucookielawmadness' => 'Manage EUCookieLaw',
+    ],
 ];

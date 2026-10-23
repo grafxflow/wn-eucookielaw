@@ -1,6 +1,6 @@
 plugin:
-    name: 'grafxflow.wneucookielaw::lang.plugin.name'
-    description: 'grafxflow.wneucookielaw::lang.plugin.description'
+    name: 'grafxflow.eucookielaw::lang.plugin.name'
+    description: 'grafxflow.eucookielaw::lang.plugin.description'
     author: 'Grafxflow'
     icon: oc-icon-adjust
     homepage: ''

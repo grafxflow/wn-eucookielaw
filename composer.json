@@ -4,5 +4,22 @@
     "description": "EU Cookie plugin for Winter CMS",
     "homepage": "https://github.com/grafxflow/wn-eucookielaw",
     "keywords": ["cms", "wintercms", "cookie", "eu"],
-    "license": "MIT"
+    "license": "MIT",
+    "require-dev": {
+        "laravel/pint": "^1.32.3"
+    },
+    "extra": {
+        "installer-name": "eucookielaw"
+    },
+    "config": {
+        "allow-plugins": {
+            "composer/installers": true,
+            "endroid/installer": true
+        }
+    },
+    "autoload": {
+        "psr-4": {
+            "Grafxflow\\Eucookielaw\\": ""
+        }
+    }
 }

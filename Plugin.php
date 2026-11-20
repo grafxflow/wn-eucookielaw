@@ -3,7 +3,9 @@
 namespace Grafxflow\Eucookielaw;
 
 use Block;
+use Cms\Classes\Controller;
 use Grafxflow\Eucookielaw\Models\Settings;
+use Illuminate\Contracts\Foundation\Application;
 use Illuminate\Support\Facades\Event;
 use System\Classes\PluginBase;
 use System\Classes\SettingsManager;
@@ -17,7 +19,7 @@ class Plugin extends PluginBase
 
     private $pathToPlugin;
 
-    public function __construct(\Illuminate\Contracts\Foundation\Application $app)
+    public function __construct(Application $app)
     {
         parent::__construct($app);
         $this->pathToPlugin = '/plugins/grafxflow/eucookielaw';
@@ -25,14 +27,14 @@ class Plugin extends PluginBase
 
     public function boot(): void
     {
-        /** @var \Cms\Classes\Controller $controller  */
+        /** @var Controller $controller */
         Event::listen('cms.page.beforeDisplay', function ($controller, $action, $params): void {
-            $controller->addJs($this->pathToPlugin . '/assets/js/cookieconsent.min.js');
-            $controller->addCss($this->pathToPlugin . '/assets/css/cookieconsent.min.css');
+            $controller->addJs($this->pathToPlugin.'/assets/js/cookieconsent.min.js');
+            $controller->addCss($this->pathToPlugin.'/assets/css/cookieconsent.min.css');
             $this->initJs();
 
             $cookieName = Settings::get('cookie_name');
-            $controller->vars["cookieconsent_status"] = empty($_COOKIE[ $cookieName ]) ? "" : $_COOKIE[ $cookieName ];
+            $controller->vars['cookieconsent_status'] = empty($_COOKIE[$cookieName]) ? '' : $_COOKIE[$cookieName];
         });
     }
 
@@ -71,19 +73,20 @@ class Plugin extends PluginBase
 
     /**
      * Function that checks if setting cookies is even allowed
+     *
      * @return bool
      */
     public function allowServingCookies()
     {
         $complianceType = Settings::get('type');
         $cookieName = Settings::get('cookie_name');
-        $cookieVal = empty($_COOKIE[ $cookieName ]) ? "" : $_COOKIE[ $cookieName ];
+        $cookieVal = empty($_COOKIE[$cookieName]) ? '' : $_COOKIE[$cookieName];
 
         switch ($complianceType) {
-            case "opt-in":
-                return (bool) (self::COOKIEVAL_ALLOW === $cookieVal);
-            case "opt-out":
-                return ! (self::COOKIEVAL_DENY === $cookieVal);
+            case 'opt-in':
+                return (bool) ($cookieVal === self::COOKIEVAL_ALLOW);
+            case 'opt-out':
+                return ! ($cookieVal === self::COOKIEVAL_DENY);
             default:
                 return true;
         }
@@ -91,11 +94,11 @@ class Plugin extends PluginBase
 
     private function initJs(): void
     {
-        $settings = new Settings();
+        $settings = new Settings;
         $dismissOnScroll = empty($settings::get('dismissOnScroll')) ? false : $settings::get('dismissOnScroll');
         $dismissOnTimeout = empty($settings::get('dismissOnTimeout')) ? false : $settings::get('dismissOnTimeout');
-        $static = empty($settings::get('static')) ? "false" : "true";
-        $revokable = empty($settings::get('revokable')) ? "false" : "true";
+        $static = empty($settings::get('static')) ? 'false' : 'true';
+        $revokable = empty($settings::get('revokable')) ? 'false' : 'true';
         $revokeBtnTemplate = json_encode($settings::get('revokeBtn'));
 
         $configData = [
@@ -110,9 +113,9 @@ class Plugin extends PluginBase
             'container' => $settings::get('container'),
             'type' => $settings::get('type'),
             'theme' => $settings::get('theme'),
-            'revokable' => ($revokable == 'true' || $revokable === true || $revokable == 1),
+            'revokable' => ($revokable == 'true' || $revokable === true || 0 == 1),
             'revokeBtn' => $revokeBtnTemplate,
-            'static' => ($static == 'true' || $static === true || $static == 1),
+            'static' => ($static == 'true' || $static === true || 0 == 1),
             'dismissOnScroll' => $dismissOnScroll,
             'dismissOnTimeout' => $dismissOnTimeout,
             'cookie_path' => $settings::get('cookie_path'),
@@ -123,15 +126,15 @@ class Plugin extends PluginBase
 
         $inlineConfig = '
         <script>
-        window.CookieNoticeConfig = ' . json_encode($configData) . ';
-        window.CookieNoticeConfig.palette = {' . $settings::get('palette') . '};
-        window.CookieNoticeConfig.elements = {' . $settings::get('elements') . '};
-        window.CookieNoticeConfig.compliance = {' . $settings::get('compliance') . '};
+        window.CookieNoticeConfig = '.json_encode($configData).';
+        window.CookieNoticeConfig.palette = {'.$settings::get('palette').'};
+        window.CookieNoticeConfig.elements = {'.$settings::get('elements').'};
+        window.CookieNoticeConfig.compliance = {'.$settings::get('compliance').'};
         </script>';
 
-        $assetUrl = Url::asset('plugins/grafxflow/eucookielaw/assets/js/cookie-init.js');
-        $scriptFile = '<script src="' . $assetUrl . '" defer></script>';
+        $assetUrl = URL::asset('plugins/grafxflow/eucookielaw/assets/js/cookie-init.js');
+        $scriptFile = '<script src="'.$assetUrl.'" defer></script>';
 
-        Block::append('scripts', $inlineConfig . $scriptFile);
+        Block::append('scripts', $inlineConfig.$scriptFile);
     }
 }

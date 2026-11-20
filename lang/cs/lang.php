@@ -6,7 +6,7 @@ return [
         'description' => 'Zobrazí cookie lištu',
     ],
     'settings' => [
-        'label' => "EU Cookie Laws",
+        'label' => 'EU Cookie Laws',
         'description' => 'Správa cookie lišty',
     ],
     'eucookielaw' => [

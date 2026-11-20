@@ -4,3 +4,5 @@
     - 'CS locale added'
 1.0.3:
     - 'Migrated to Winter CMS'
+1.0.4:
+    - 'Check / Correct Code against php8.3, php8.4 and php8.5'
